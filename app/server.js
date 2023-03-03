@@ -1,3 +1,5 @@
+const { AllRoutes } = require("./router/router");
+
 module.exports = class Application {
     #express = require("express");
     #app = this.#express();
@@ -35,7 +37,7 @@ module.exports = class Application {
 
     errorHandler() {
         this.#app.use((req, res, next) => {
-            return res.status.json({
+            return res.status(404).json({
                 status: 404,
                 success: false,
                 message: "Not Found!"
@@ -56,7 +58,14 @@ module.exports = class Application {
         this.#app.get("/", (req ,res, next) => {
             return res.json({
                  message: "This is a new Express application",
-            })
-        })
-    }
+            });
+        });
+        this.#app.use(AllRoutes);
+        // this.#app.use((req, res, next) => {
+        //     try {
+        //     } catch (err) {
+        //         next(err);
+        //     };
+        // });
+    };
 };
